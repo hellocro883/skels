@@ -289,11 +289,26 @@ if false then
 	local Skeletons = {}
 	for _, Player in next, game.Players:GetChildren() do
 		if Player ~= LocalPlayer then
-			table.insert(Skeletons, Library:NewSkeleton(Player, true));
+			if Player.Team == LocalPlayer.Team then
+				-- Hide skeleton for players on the same team
+				table.insert(Skeletons, Library:NewSkeleton(Player, false))  -- Hide the skeleton
+			else
+				-- Show skeleton for players on different teams
+				table.insert(Skeletons, Library:NewSkeleton(Player, true))  -- Show the skeleton
+			end
 		end
 	end
+
 	game.Players.PlayerAdded:Connect(function(Player)
-		table.insert(Skeletons, Library:NewSkeleton(Player, true));
+		if Player ~= LocalPlayer then
+			if Player.Team == LocalPlayer.Team then
+				-- Hide skeleton for players on the same team
+				table.insert(Skeletons, Library:NewSkeleton(Player, false))  -- Hide the skeleton
+			else
+				-- Show skeleton for players on different teams
+				table.insert(Skeletons, Library:NewSkeleton(Player, true))  -- Show the skeleton
+			end
+		end
 	end)
 
 	while true do
